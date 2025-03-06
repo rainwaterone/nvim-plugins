@@ -1,19 +1,28 @@
+-- This entire module will only be usfeul for Nvim older than 0.11, since vim.lsp.config makes this module obsolete. So
+-- it's easier to just disable all warnings for now and remove this file when it's no longer relevant.
+--- @diagnostic disable: assign-type-mismatch
+--- @diagnostic disable: param-type-mismatch
+
 local util = require 'lspconfig.util'
 local async = require 'lspconfig.async'
-local api, validate, lsp, uv, fn = vim.api, vim.validate, vim.lsp, (vim.uv or vim.loop), vim.fn
+local api, lsp, fn = vim.api, vim.lsp, vim.fn
 local tbl_deep_extend = vim.tbl_deep_extend
 
 local configs = {}
 
+--- @alias lspconfig.Config.command {[1]:string|fun(args: vim.api.keyset.create_user_command.command_args)}|vim.api.keyset.user_command
+
 --- @class lspconfig.Config : vim.lsp.ClientConfig
 --- @field enabled? boolean
 --- @field single_file_support? boolean
+--- @field silent? boolean
 --- @field filetypes? string[]
 --- @field filetype? string
 --- @field on_new_config? fun(new_config: lspconfig.Config?, new_root_dir: string)
 --- @field autostart? boolean
 --- @field package _on_attach? fun(client: vim.lsp.Client, bufnr: integer)
 --- @field root_dir? string|fun(filename: string, bufnr: number)
+--- @field commands? table<string, lspconfig.Config.command>
 
 --- @param cmd any
 local function sanitize_cmd(cmd)
@@ -30,14 +39,6 @@ end
 ---@param config_name string
 ---@param config_def table Config definition read from `lspconfig.configs.<name>`.
 function configs.__newindex(t, config_name, config_def)
-  validate {
-    name = { config_name, 's' },
-    default_config = { config_def.default_config, 't' },
-    on_new_config = { config_def.on_new_config, 'f', true },
-    on_attach = { config_def.on_attach, 'f', true },
-    commands = { config_def.commands, 't', true },
-  }
-
   if config_def.default_config.deprecate then
     vim.deprecate(
       config_name,
@@ -48,16 +49,7 @@ function configs.__newindex(t, config_name, config_def)
     )
   end
 
-  if config_def.commands then
-    for k, v in pairs(config_def.commands) do
-      validate {
-        ['command.name'] = { k, 's' },
-        ['command.fn'] = { v[1], 'f' },
-      }
-    end
-  else
-    config_def.commands = {}
-  end
+  config_def.commands = config_def.commands or {}
 
   local M = {}
 
@@ -69,27 +61,6 @@ function configs.__newindex(t, config_name, config_def)
   --- @param user_config lspconfig.Config
   function M.setup(user_config)
     local lsp_group = api.nvim_create_augroup('lspconfig', { clear = false })
-
-    validate {
-      cmd = {
-        user_config.cmd,
-        { 'f', 't' },
-        true,
-      },
-      root_dir = { user_config.root_dir, { 's', 'f' }, true },
-      filetypes = { user_config.filetype, 't', true },
-      on_new_config = { user_config.on_new_config, 'f', true },
-      on_attach = { user_config.on_attach, 'f', true },
-      commands = { user_config.commands, 't', true },
-    }
-    if user_config.commands then
-      for k, v in pairs(user_config.commands) do
-        validate {
-          ['command.name'] = { k, 's' },
-          ['command.fn'] = { v[1], 'f' },
-        }
-      end
-    end
 
     local config = tbl_deep_extend('keep', user_config, default_config)
 
@@ -105,7 +76,7 @@ function configs.__newindex(t, config_name, config_def)
       api.nvim_create_autocmd(event_conf.event, {
         pattern = event_conf.pattern or '*',
         callback = function(opt)
-          M.manager:try_add(opt.buf)
+          M.manager:try_add(opt.buf, nil, config.silent)
         end,
         group = lsp_group,
         desc = string.format(
@@ -127,12 +98,12 @@ function configs.__newindex(t, config_name, config_def)
         return
       end
 
-      local pwd = uv.cwd()
+      local pwd = vim.loop.cwd()
 
       async.run(function()
         local root_dir
         if type(get_root_dir) == 'function' then
-          root_dir = get_root_dir(util.path.sanitize(bufname), bufnr)
+          root_dir = get_root_dir(vim.fs.normalize(bufname), bufnr)
           async.reenter()
           if not api.nvim_buf_is_valid(bufnr) then
             return
@@ -161,7 +132,7 @@ function configs.__newindex(t, config_name, config_def)
           for _, buf in ipairs(api.nvim_list_bufs()) do
             local buf_name = api.nvim_buf_get_name(buf)
             if util.bufname_valid(buf_name) then
-              local buf_dir = util.path.sanitize(buf_name)
+              local buf_dir = vim.fs.normalize(buf_name)
               if buf_dir:sub(1, root_dir:len()) == root_dir then
                 M.manager:try_add_wrapper(buf, root_dir)
               end
@@ -175,8 +146,8 @@ function configs.__newindex(t, config_name, config_def)
           if not api.nvim_buf_is_valid(bufnr) or (#bufname ~= 0 and not util.bufname_valid(bufname)) then
             return
           end
-          local pseudo_root = #bufname == 0 and pwd or util.path.dirname(util.path.sanitize(bufname))
-          M.manager:add(pseudo_root, true, bufnr)
+          local pseudo_root = #bufname == 0 and pwd or vim.fs.dirname(vim.fs.normalize(bufname))
+          M.manager:add(pseudo_root, true, bufnr, config.silent)
         end
       end)
     end

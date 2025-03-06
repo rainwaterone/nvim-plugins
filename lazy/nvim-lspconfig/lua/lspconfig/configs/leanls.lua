@@ -6,7 +6,7 @@ return {
     filetypes = { 'lean' },
     root_dir = function(fname)
       -- check if inside elan stdlib
-      fname = util.path.sanitize(fname)
+      fname = vim.fs.normalize(fname)
       local stdlib_dir
       do
         local _, endpos = fname:find '/src/lean'
@@ -23,7 +23,7 @@ return {
 
       return util.root_pattern('lakefile.toml', 'lakefile.lean', 'lean-toolchain')(fname)
         or stdlib_dir
-        or util.find_git_ancestor(fname)
+        or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
     end,
     on_new_config = function(config, root_dir)
       -- add root dir as command-line argument for `ps aux`

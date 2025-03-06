@@ -44,13 +44,22 @@ require('lint').linters_by_ft = {
 }
 ```
 
-Then setup a autocmd to trigger linting. For example:
+To get the `filetype` of a buffer you can run `:= vim.bo.filetype`.
+The `filetype` can also be a compound `filetype`. For example, if you have a buffer
+with a `filetype` like `yaml.ghaction`, you can use either `ghaction`, `yaml` or
+the full `yaml.ghaction` as key in the `linters_by_ft` table and the linter
+will be picked up in that buffer. This is useful for linters like
+[actionlint][actionlint] in combination with `vim.filetype` patterns like
+`[".*/.github/workflows/.*%.yml"] = "yaml.ghaction",`
+
+
+Then setup a `autocmd` to trigger linting. For example:
 
 ```vimL
 au BufWritePost * lua require('lint').try_lint()
 ```
 
-or with Lua autocmds:
+or with Lua auto commands:
 
 ```lua
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -68,7 +77,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 ```
 
 Some linters require a file to be saved to disk, others support linting `stdin`
-input. For such linters you could also define a more aggressive autocmd, for
+input. For such linters you could also define a more aggressive `autocmd`, for
 example on the `InsertLeave` or `TextChanged` events.
 
 
@@ -119,6 +128,7 @@ Other dedicated linters that are built-in are:
 | [dash][dash]                           | `dash`                 |
 | [deadnix][deadnix]                     | `deadnix`              |
 | [deno][deno]                           | `deno`                 |
+| [dmypy][dmypy]                         | `dmypy`                |
 | [DirectX Shader Compiler][dxc]         | `dxc`                  |
 | [djlint][djlint]                       | `djlint`               |
 | [dotenv-linter][dotenv-linter]         | `dotenv_linter`        |
@@ -186,6 +196,7 @@ Other dedicated linters that are built-in are:
 | [Revive][14]                           | `revive`               |
 | [rflint][rflint]                       | `rflint`               |
 | [robocop][robocop]                     | `robocop`              |
+| [rpmlint][rpmlint]                     | `rpmlint`              |
 | [RPM][rpm]                             | `rpmspec`              |
 | [rstcheck][rstcheck]                   | `rstcheck`             |
 | [rstlint][rstlint]                     | `rstlint`              |
@@ -202,6 +213,7 @@ Other dedicated linters that are built-in are:
 | [Spectral][spectral]                   | `spectral`             |
 | [sphinx-lint][sphinx-lint]             | `sphinx-lint`          |
 | [sqlfluff][sqlfluff]                   | `sqlfluff`             |
+| [sqruff][sqruff]                       | `sqruff`               |
 | [standardjs][standardjs]               | `standardjs`           |
 | [StandardRB][27]                       | `standardrb`           |
 | [statix check][33]                     | `statix`               |
@@ -214,6 +226,7 @@ Other dedicated linters that are built-in are:
 | [tfsec][tfsec]                         | `tfsec`                |
 | [tlint][tlint]                         | `tlint`                |
 | [trivy][trivy]                         | `trivy`                |
+| [ts-standard][ts-standard]             | `ts-standard`          |
 | [typos][typos]                         | `typos`                |
 | [Vala][vala-lint]                      | `vala_lint`            |
 | [Vale][8]                              | `vale`                 |
@@ -225,6 +238,7 @@ Other dedicated linters that are built-in are:
 | [write-good][write-good]               | `write_good`           |
 | [yamllint][yamllint]                   | `yamllint`             |
 | [yq][yq]                               | `yq`                   |
+| [zizmor][zizmor]                       | `zizmor`               |
 | [zsh][zsh]                             | `zsh`                  |
 
 ## Custom Linters
@@ -523,6 +537,7 @@ busted tests/
 [cue]: https://github.com/cue-lang/cue
 [curlylint]: https://www.curlylint.org/
 [sqlfluff]: https://github.com/sqlfluff/sqlfluff
+[sqruff]: https://github.com/quarylabs/sqruff
 [verilator]: https://verilator.org/guide/latest/
 [actionlint]: https://github.com/rhysd/actionlint
 [buf_lint]: https://github.com/bufbuild/buf
@@ -537,8 +552,10 @@ busted tests/
 [perlcritic]: https://github.com/Perl-Critic/Perl-Critic
 [ponyc]: https://github.com/ponylang/ponyc
 [gdlint]: https://github.com/Scony/godot-gdscript-toolkit
+[rpmlint]: https://github.com/rpm-software-management/rpmlint
 [rpm]: https://rpm.org
 [ec]: https://github.com/editorconfig-checker/editorconfig-checker
+[dmypy]: https://mypy.readthedocs.io/en/stable/mypy_daemon.html
 [deno]: https://github.com/denoland/deno
 [standardjs]: https://standardjs.com/
 [biomejs]: https://github.com/biomejs/biome
@@ -582,3 +599,5 @@ busted tests/
 [yq]: https://mikefarah.gitbook.io/yq
 [svlint]: https://github.com/dalance/svlint
 [slang]: https://github.com/MikePopoloski/slang
+[zizmor]: https://github.com/woodruffw/zizmor
+[ts-standard]: https://github.com/standard/ts-standard

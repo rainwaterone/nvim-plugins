@@ -249,6 +249,14 @@ list.chatito = {
   maintainers = { "@ObserverOfTime" },
 }
 
+list.circom = {
+  install_info = {
+    url = "https://github.com/Decurity/tree-sitter-circom",
+    files = { "src/parser.c" },
+  },
+  maintainers = { "@alexandr-martirosyan" },
+}
+
 list.clojure = {
   install_info = {
     url = "https://github.com/sogaiu/tree-sitter-clojure",
@@ -461,7 +469,7 @@ list.dtd = {
 list.earthfile = {
   install_info = {
     url = "https://github.com/glehmann/tree-sitter-earthfile",
-    files = { "src/parser.c" },
+    files = { "src/parser.c", "src/scanner.c" },
   },
   maintainers = { "@glehmann" },
 }
@@ -539,6 +547,14 @@ list.embedded_template = {
     files = { "src/parser.c" },
   },
   filetype = "eruby",
+}
+
+list.enforce = {
+  install_info = {
+    url = "https://github.com/simonvic/tree-sitter-enforce",
+    files = { "src/parser.c" },
+  },
+  maintainers = { "@simonvic" },
 }
 
 list.erlang = {
@@ -1043,6 +1059,15 @@ list.idl = {
   maintainers = { "@cathaysia" },
 }
 
+list.idris = {
+  install_info = {
+    url = "https://github.com/kayhide/tree-sitter-idris",
+    files = { "src/parser.c", "src/scanner.c" },
+  },
+  filetype = "idris2",
+  maintainers = { "@srghma" },
+}
+
 list.ini = {
   install_info = {
     url = "https://github.com/justinmk/tree-sitter-ini",
@@ -1058,6 +1083,14 @@ list.inko = {
     files = { "src/parser.c" },
   },
   maintainers = { "@yorickpeterse" },
+}
+
+list.ipkg = {
+  install_info = {
+    url = "https://github.com/srghma/tree-sitter-ipkg",
+    files = { "src/parser.c", "src/scanner.c" },
+  },
+  maintainers = { "@srghma" },
 }
 
 list.ispc = {
@@ -1092,6 +1125,24 @@ list.javascript = {
     files = { "src/parser.c", "src/scanner.c" },
   },
   maintainers = { "@steelsojka" },
+}
+
+list.jinja = {
+  install_info = {
+    url = "https://github.com/cathaysia/tree-sitter-jinja",
+    location = "tree-sitter-jinja",
+    files = { "src/parser.c", "src/scanner.c" },
+  },
+  maintainers = { "@cathaysia" },
+}
+
+list.jinja_inline = {
+  install_info = {
+    url = "https://github.com/cathaysia/tree-sitter-jinja",
+    location = "tree-sitter-jinja_inline",
+    files = { "src/parser.c", "src/scanner.c" },
+  },
+  maintainers = { "@cathaysia" },
 }
 
 list.jq = {
@@ -1149,6 +1200,7 @@ list.julia = {
     url = "https://github.com/tree-sitter/tree-sitter-julia",
     files = { "src/parser.c", "src/scanner.c" },
   },
+  maintainers = { "@fredrikekre" },
 }
 
 list.just = {
@@ -1157,6 +1209,14 @@ list.just = {
     files = { "src/parser.c", "src/scanner.c" },
   },
   maintainers = { "@Hubro" },
+}
+
+list.kcl = {
+  install_info = {
+    url = "https://github.com/kcl-lang/tree-sitter-kcl",
+    files = { "src/parser.c", "src/scanner.c" },
+  },
+  maintainers = { "@bertbaron" },
 }
 
 list.kconfig = {
@@ -1472,7 +1532,7 @@ list.nqc = {
 list.nu = {
   install_info = {
     url = "https://github.com/nushell/tree-sitter-nu",
-    files = { "src/parser.c" },
+    files = { "src/parser.c", "src/scanner.c" },
   },
   maintainers = { "@abhisheksingh0x558" },
 }
@@ -1527,13 +1587,6 @@ list.odin = {
     files = { "src/parser.c", "src/scanner.c" },
   },
   maintainers = { "@amaanq" },
-}
-
-list.org = {
-  install_info = {
-    url = "https://github.com/milisims/tree-sitter-org",
-    files = { "src/parser.c", "src/scanner.c" },
-  },
 }
 
 list.pascal = {
@@ -1835,6 +1888,15 @@ list.rasi = {
   maintainers = { "@Fymyte" },
 }
 
+list.razor = {
+  install_info = {
+    url = "https://github.com/tris203/tree-sitter-razor",
+    files = { "src/parser.c", "src/scanner.c" },
+    generate_requires_npm = true,
+  },
+  maintainers = { "@tris203" },
+}
+
 list.rbs = {
   install_info = {
     url = "https://github.com/joker1007/tree-sitter-rbs",
@@ -2014,6 +2076,14 @@ list.slang = {
   filetype = "shaderslang",
   maintainers = { "@theHamsta" },
   experimental = true,
+}
+
+list.slim = {
+  install_info = {
+    url = "https://github.com/theoo/tree-sitter-slim",
+    files = { "src/parser.c", "src/scanner.c" },
+  },
+  maintainers = { "@theoo" },
 }
 
 list.slint = {

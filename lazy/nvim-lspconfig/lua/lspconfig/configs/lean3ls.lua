@@ -6,7 +6,7 @@ return {
     filetypes = { 'lean3' },
     offset_encoding = 'utf-32',
     root_dir = function(fname)
-      fname = util.path.sanitize(fname)
+      fname = vim.fs.normalize(fname)
       -- check if inside elan stdlib
       local stdlib_dir
       do
@@ -19,7 +19,7 @@ return {
       return util.root_pattern 'leanpkg.toml'(fname)
         or util.root_pattern 'leanpkg.path'(fname)
         or stdlib_dir
-        or util.find_git_ancestor(fname)
+        or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
     end,
     single_file_support = true,
   },

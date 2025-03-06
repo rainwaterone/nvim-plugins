@@ -2,23 +2,23 @@ local util = require 'lspconfig.util'
 
 -- https://clangd.llvm.org/extensions.html#switch-between-sourceheader
 local function switch_source_header(bufnr)
+  local method_name = 'textDocument/switchSourceHeader'
   bufnr = util.validate_bufnr(bufnr)
-  local clangd_client = util.get_active_client_by_name(bufnr, 'clangd')
-  local params = { uri = vim.uri_from_bufnr(bufnr) }
-  if clangd_client then
-    clangd_client.request('textDocument/switchSourceHeader', params, function(err, result)
-      if err then
-        error(tostring(err))
-      end
-      if not result then
-        print 'Corresponding file cannot be determined'
-        return
-      end
-      vim.api.nvim_command('edit ' .. vim.uri_to_fname(result))
-    end, bufnr)
-  else
-    print 'method textDocument/switchSourceHeader is not supported by any servers active on the current buffer'
+  local client = util.get_active_client_by_name(bufnr, 'clangd')
+  if not client then
+    return vim.notify(('method %s is not supported by any servers active on the current buffer'):format(method_name))
   end
+  local params = vim.lsp.util.make_text_document_params(bufnr)
+  client.request(method_name, params, function(err, result)
+    if err then
+      error(tostring(err))
+    end
+    if not result then
+      vim.notify('corresponding file cannot be determined')
+      return
+    end
+    vim.cmd.edit(vim.uri_to_fname(result))
+  end, bufnr)
 end
 
 local function symbol_info()
@@ -27,7 +27,8 @@ local function symbol_info()
   if not clangd_client or not clangd_client.supports_method 'textDocument/symbolInfo' then
     return vim.notify('Clangd client not found', vim.log.levels.ERROR)
   end
-  local params = vim.lsp.util.make_position_params()
+  local win = vim.api.nvim_get_current_win()
+  local params = vim.lsp.util.make_position_params(win, clangd_client.offset_encoding)
   clangd_client.request('textDocument/symbolInfo', params, function(err, res)
     if err or #res == 0 then
       -- Clangd always returns an error, there is not reason to parse it
@@ -40,7 +41,7 @@ local function symbol_info()
       width = math.max(string.len(name), string.len(container)),
       focusable = false,
       focus = false,
-      border = require('lspconfig.ui.windows').default_options.border or 'single',
+      border = 'single',
       title = 'Symbol Info',
     })
   end, bufnr)
@@ -58,7 +59,7 @@ return {
         'compile_commands.json',
         'compile_flags.txt',
         'configure.ac' -- AutoTools
-      )(fname) or util.find_git_ancestor(fname)
+      )(fname) or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
     end,
     single_file_support = true,
     capabilities = {

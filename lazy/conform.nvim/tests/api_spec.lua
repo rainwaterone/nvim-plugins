@@ -12,6 +12,7 @@ describe("api", function()
     assert.equal("stylua", info.name)
     assert.equal("stylua", info.command)
     assert.equal("boolean", type(info.available))
+    assert.is_nil(info.error)
   end)
 
   it("retrieves unavailable info if formatter does not exist", function()
@@ -19,6 +20,7 @@ describe("api", function()
     assert.equal("asdf", info.name)
     assert.equal("asdf", info.command)
     assert.falsy(info.available)
+    assert.truthy(info.error)
   end)
 
   describe("list_formatters", function()
@@ -58,41 +60,16 @@ describe("api", function()
       end, formatters)
       assert.are.same({ "stylua", "lua-format", "trim_whitespace" }, formatter_names)
     end)
-
-    it("flattens formatters in alternation groups", function()
-      conform.formatters_by_ft.lua = { { "stylua", "lua-format" }, "trim_whitespace" }
-      local bufnr = vim.api.nvim_create_buf(false, true)
-      vim.api.nvim_set_current_buf(bufnr)
-      vim.bo[bufnr].filetype = "lua"
-      local formatters = conform.list_formatters()
-      local formatter_names = vim.tbl_map(function(f)
-        return f.name
-      end, formatters)
-      assert.are.same({ "stylua", "trim_whitespace" }, formatter_names)
-    end)
   end)
 
-  describe("list_all_formatters", function()
-    it("lists all formatters configured for all buffers", function()
-      conform.formatters_by_ft.lua = { "stylua", "lua-format" }
-      conform.formatters_by_ft["*"] = { "trim_whitespace" }
-      local formatters = conform.list_all_formatters()
-      local formatter_names = vim.tbl_map(function(f)
-        return f.name
-      end, formatters)
-      table.sort(formatter_names)
-      assert.are.same({ "lua-format", "stylua", "trim_whitespace" }, formatter_names)
-    end)
-
-    it("flattens formatters in alternation groups", function()
-      conform.formatters_by_ft.lua = { { "stylua", "lua-format" } }
-      conform.formatters_by_ft["*"] = { "trim_whitespace" }
-      local formatters = conform.list_all_formatters()
-      local formatter_names = vim.tbl_map(function(f)
-        return f.name
-      end, formatters)
-      table.sort(formatter_names)
-      assert.are.same({ "lua-format", "stylua", "trim_whitespace" }, formatter_names)
-    end)
+  it("lists_all_formatters configured for all buffers", function()
+    conform.formatters_by_ft.lua = { "stylua", "lua-format" }
+    conform.formatters_by_ft["*"] = { "trim_whitespace" }
+    local formatters = conform.list_all_formatters()
+    local formatter_names = vim.tbl_map(function(f)
+      return f.name
+    end, formatters)
+    table.sort(formatter_names)
+    assert.are.same({ "lua-format", "stylua", "trim_whitespace" }, formatter_names)
   end)
 end)

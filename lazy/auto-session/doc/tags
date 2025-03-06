@@ -12,6 +12,7 @@ AutoSession.SaveSession	auto-session.txt	/*AutoSession.SaveSession*
 AutoSession.SaveSessionToDir	auto-session.txt	/*AutoSession.SaveSessionToDir*
 AutoSession.session_exists_for_cwd	auto-session.txt	/*AutoSession.session_exists_for_cwd*
 AutoSession.setup	auto-session.txt	/*AutoSession.setup*
+RestoreOpts	auto-session.txt	/*RestoreOpts*
 SessionControl	auto-session.txt	/*SessionControl*
 SessionLens	auto-session.txt	/*SessionLens*
 SessionLensMappings	auto-session.txt	/*SessionLensMappings*

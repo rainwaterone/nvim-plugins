@@ -119,7 +119,7 @@ local function get_size(size)
   if type(size) == "number" then
     return size
   elseif type(size) == "function" then
-    return size()
+    return get_size(size())
   end
   local size_as_number = tonumber(size:sub(0, -2))
   local percent_as_decimal = size_as_number / 100
@@ -164,8 +164,10 @@ local function set_window_options_and_buffer()
     local eventignore = vim.api.nvim_get_option("eventignore") ---@diagnostic disable-line: deprecated
     vim.api.nvim_set_option("eventignore", "all") ---@diagnostic disable-line: deprecated
 
+    -- #3009 vim.api.nvim_win_set_option does not set local scope without explicit winid.
+    -- Revert to opt_local instead of propagating it through for just the 0.10 path.
     for k, v in pairs(M.View.winopts) do
-      vim.api.nvim_win_set_option(0, k, v) ---@diagnostic disable-line: deprecated
+      vim.opt_local[k] = v
     end
 
     vim.api.nvim_set_option("eventignore", eventignore) ---@diagnostic disable-line: deprecated
@@ -268,9 +270,12 @@ function M.close_all_tabs()
   end
 end
 
-function M.close()
+---@param tabpage integer|nil
+function M.close(tabpage)
   if M.View.tab.sync.close then
     M.close_all_tabs()
+  elseif tabpage then
+    close(tabpage)
   else
     M.close_this_tab_only()
   end
@@ -319,8 +324,19 @@ local function grow()
     max_width = get_width(M.View.max_width) - padding
   end
 
-  for _, l in pairs(lines) do
+  local ns_id = vim.api.nvim_get_namespaces()["NvimTreeExtmarks"]
+  for line_nr, l in pairs(lines) do
     local count = vim.fn.strchars(l)
+    -- also add space for right-aligned icons
+    local extmarks = vim.api.nvim_buf_get_extmarks(M.get_bufnr(), ns_id, { line_nr, 0 }, { line_nr, -1 }, { details = true })
+    for _, extmark in ipairs(extmarks) do
+      local virt_texts = extmark[4].virt_text
+      if virt_texts then
+        for _, virt_text in ipairs(virt_texts) do
+          count = count + vim.fn.strchars(virt_text[1])
+        end
+      end
+    end
     if resizing_width < count then
       resizing_width = count
     end

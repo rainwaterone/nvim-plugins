@@ -66,13 +66,14 @@ Here are the default settings:
   auto_restore_last_session = false, -- On startup, loads the last saved session if session for cwd does not exist
   use_git_branch = false, -- Include git branch name in session name
   lazy_support = true, -- Automatically detect if Lazy.nvim is being used and wait until Lazy is done to make sure session is restored correctly. Does nothing if Lazy isn't being used. Can be disabled if a problem is suspected or for debugging
-  bypass_save_filetypes = nil, -- List of file types to bypass auto save when the only buffer open is one of the file types listed, useful to ignore dashboards
+  bypass_save_filetypes = nil, -- List of filetypes to bypass auto save when the only buffer open is one of the file types listed, useful to ignore dashboards
   close_unsupported_windows = true, -- Close windows that aren't backed by normal file before autosaving a session
   args_allow_single_directory = true, -- Follow normal sesion save/load logic if launched with a single directory as the only argument
   args_allow_files_auto_save = false, -- Allow saving a session even when launched with a file argument (or multiple files/dirs). It does not load any existing session first. While you can just set this to true, you probably want to set it to a function that decides when to save a session when launched with file args. See documentation for more detail
   continue_restore_on_error = true, -- Keep loading the session even if there's an error
   show_auto_restore_notif = false, -- Whether to show a notification when auto-restoring
   cwd_change_handling = false, -- Follow cwd changes, saving a session before change and restoring after
+  lsp_stop_on_restore = false, -- Should language servers be stopped when restoring a session. Can also be a function that will be called if set. Not called on autorestore from startup
   log_level = "error", -- Sets the log level of the plugin (debug, info, warn, error).
 
   session_lens = {
@@ -140,7 +141,7 @@ AutoSession exposes the following commands that can be used or mapped to any key
 
 :SessionPurgeOrphaned " removes all orphaned sessions with no working directory left.
 
-:SessionSearch " open a session picker, uses Telescope if installed, vim.ui.select otherwise
+:SessionSearch " open a session picker, uses Telescope or Snacks if installed, vim.ui.select otherwise
 
 :Autosession search " open a vim.ui.select picker to choose a session to load.
 :Autosession delete " open a vim.ui.select picker to choose a session to delete.
@@ -152,7 +153,7 @@ If you create a manually named session via `SessionSave my_session` or you resto
 
 ## 🔭 Session Lens
 
-You can use Telescope to see, load, and delete your sessions. It's enabled by default if you have Telescope, but here's the Lazy config that shows the configuration options:
+You can use Telescope or [snacks.nvim](https://github.com/folke/snacks.nvim) to see, load, and delete your sessions. It's enabled by default if you have Telescope, but here's the Lazy config that shows the configuration options:
 
 ```lua
 
@@ -197,7 +198,7 @@ You can use Telescope to see, load, and delete your sessions. It's enabled by de
 ```
 
 You can use `:SessionSearch` to launch the session picker. If `load_on_setup = false`, `:SessionSearch` will initialize the Telescope extension when called. You can also use
-`:Telescope session-lens` to launch the session picker but only if `load_on_setup = true` or you've previously called `SessionSearch`.
+`:Telescope session-lens` to launch the session picker but only if `load_on_setup = true` or you've previously called `SessionSearch`. If you don't have Telescope installed but do have Snacks installed (and the picker enabled), AutoSession will use Snacks as the session picker. No change in configuration is needed (e.g. it will use the same keymap config).
 
 The following default keymaps are available when the session-lens picker is open:
 

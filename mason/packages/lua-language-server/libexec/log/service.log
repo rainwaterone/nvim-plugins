@@ -1,10 +1,10 @@
-[15:12:37.072][info] [#0:/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/main.lua:68]: Lua Lsp startup, root: 	/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec
-[15:12:37.072][info] [#0:/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/main.lua:69]: ROOT:	/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec
-[15:12:37.072][info] [#0:/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/main.lua:70]: LOGPATH:	/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/log
-[15:12:37.072][info] [#0:/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/main.lua:71]: METAPATH:	/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/meta
-[15:12:37.072][info] [#0:/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/main.lua:72]: VERSION:	3.13.0
-[15:12:37.107][info] [#0:script/proto/proto.lua:260]: Listen Mode: stdio
-[15:12:37.107][info] [#0:script/service/service.lua:145]: 
+[09:18:38.871][info] [#0:/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/main.lua:68]: Lua Lsp startup, root: 	/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec
+[09:18:38.872][info] [#0:/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/main.lua:69]: ROOT:	/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec
+[09:18:38.872][info] [#0:/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/main.lua:70]: LOGPATH:	/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/log
+[09:18:38.872][info] [#0:/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/main.lua:71]: METAPATH:	/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/meta
+[09:18:38.872][info] [#0:/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/main.lua:72]: VERSION:	3.13.0
+[09:18:38.918][info] [#0:script/proto/proto.lua:260]: Listen Mode: stdio
+[09:18:38.919][info] [#0:script/service/service.lua:145]: 
 ========= Medical Examination Report =========
     --------------- Memory ---------------
         Total: 2.253 MB
@@ -26,7 +26,7 @@
         Holdon:   0
         Waiting:  0
 ==============================================
-[15:12:37.214][info] [#0:script/client.lua:657]: Client init	{
+[09:18:39.030][info] [#0:script/client.lua:657]: Client init	{
   capabilities = {
     general = {
       positionEncodings = { "utf-16" }
@@ -60,7 +60,7 @@
           labelDetailsSupport = true,
           preselectSupport = true,
           resolveSupport = {
-            properties = { "documentation", "detail", "additionalTextEdits", "sortText", "filterText", "insertText", "textEdit", "insertTextFormat", "insertTextMode" }
+            properties = { "documentation", "additionalTextEdits", "insertTextFormat", "insertTextMode", "command" }
           },
           snippetSupport = true,
           tagSupport = {
@@ -210,7 +210,7 @@
     version = "0.10.2+g8b9864200"
   },
   initializationOptions = {},
-  processId = 20691,
+  processId = 23109,
   rootPath = "/home/erainwater/.config/nvim",
   rootUri = "file:///home/erainwater/.config/nvim",
   trace = "off",
@@ -220,7 +220,7 @@
       uri = "file:///home/erainwater/.config/nvim"
     } }
 }
-[15:12:37.214][info] [#0:script/language.lua:137]: VSC language: nil
-[15:12:37.214][info] [#0:script/language.lua:138]: LS  language: en-us
-[15:12:37.214][info] [#0:script/workspace/workspace.lua:38]: Workspace init root: 	file:///home/erainwater/.config/nvim
-[15:12:37.215][info] [#0:script/workspace/workspace.lua:42]: Log path: 	/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/log/file_home_erainwater_.config_nvim.log
+[09:18:39.030][info] [#0:script/language.lua:137]: VSC language: nil
+[09:18:39.030][info] [#0:script/language.lua:138]: LS  language: en-us
+[09:18:39.030][info] [#0:script/workspace/workspace.lua:38]: Workspace init root: 	file:///home/erainwater/.config/nvim
+[09:18:39.030][info] [#0:script/workspace/workspace.lua:42]: Log path: 	/home/erainwater/.local/share/nvim/mason/packages/lua-language-server/libexec/log/file_home_erainwater_.config_nvim.log

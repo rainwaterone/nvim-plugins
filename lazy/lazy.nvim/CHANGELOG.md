@@ -1,5 +1,62 @@
 # Changelog
 
+## [11.17.1](https://github.com/folke/lazy.nvim/compare/v11.17.0...v11.17.1) (2025-02-25)
+
+
+### Bug Fixes
+
+* **bootstrap:** support for older Neovim versions ([1c9ba37](https://github.com/folke/lazy.nvim/commit/1c9ba3704564a2e34a22191bb89678680ffeb245))
+* **meta:** rebuild dirty right after disable. See [#1889](https://github.com/folke/lazy.nvim/issues/1889) ([d51cf69](https://github.com/folke/lazy.nvim/commit/d51cf6978321d659e68a8bc38ee806bd2517a196))
+
+## [11.17.0](https://github.com/folke/lazy.nvim/compare/v11.16.2...v11.17.0) (2025-02-24)
+
+
+### Features
+
+* **config,render:** allow customizing the debug icon ([#1863](https://github.com/folke/lazy.nvim/issues/1863)) ([a9c660d](https://github.com/folke/lazy.nvim/commit/a9c660d6ef1b396869d3d951760aa7a3dbfe575f))
+* **util:** pass lang to `vim.notify` so that snacks notifier can render the ft. Closes [#1919](https://github.com/folke/lazy.nvim/issues/1919) ([c6a57a3](https://github.com/folke/lazy.nvim/commit/c6a57a3534d3494bcc5ff9b0586e141bdb0280eb))
+
+
+### Bug Fixes
+
+* **config:** add missing space on the default debug icon ([#1879](https://github.com/folke/lazy.nvim/issues/1879)) ([4df5c4d](https://github.com/folke/lazy.nvim/commit/4df5c4d65a3bbf801edd9ec55fb1ae55cfa72dd0))
+* **meta:** disable top-level specs before the rest. Closes [#1889](https://github.com/folke/lazy.nvim/issues/1889) ([f81a3fb](https://github.com/folke/lazy.nvim/commit/f81a3fb7feaf460ec7c8c983682b4a693b18fdd4))
+* **ui:** do not show virt_lines for messages ([#1904](https://github.com/folke/lazy.nvim/issues/1904)) ([f15a939](https://github.com/folke/lazy.nvim/commit/f15a93907ddad3d9139aea465ae18336d87f5ce6))
+
+## [11.16.2](https://github.com/folke/lazy.nvim/compare/v11.16.1...v11.16.2) (2024-12-13)
+
+
+### Bug Fixes
+
+* **meta:** when a plugin is both optional and disabled, then just delete it from the list ([805b85c](https://github.com/folke/lazy.nvim/commit/805b85c2ea3bd6f9506ef22cbd6e3a39172b5b08))
+
+## [11.16.1](https://github.com/folke/lazy.nvim/compare/v11.16.0...v11.16.1) (2024-12-09)
+
+
+### Bug Fixes
+
+* **types:** ensure all fields for `LazyPluginSpec` are optional ([#1843](https://github.com/folke/lazy.nvim/issues/1843)) ([703be1d](https://github.com/folke/lazy.nvim/commit/703be1dda35e142e76e94e7503cf67d6b98a1d35)), closes [#1842](https://github.com/folke/lazy.nvim/issues/1842)
+
+## [11.16.0](https://github.com/folke/lazy.nvim/compare/v11.15.0...v11.16.0) (2024-12-07)
+
+
+### Features
+
+* **plugin:** added support for virtual plugins. Closes [#1836](https://github.com/folke/lazy.nvim/issues/1836) ([ee64abc](https://github.com/folke/lazy.nvim/commit/ee64abc76be2b237b95d241a924b0323005b868a))
+
+
+### Bug Fixes
+
+* **plugin:** don't check if dir exists for virtual plugins ([656cf43](https://github.com/folke/lazy.nvim/commit/656cf4309396b7b8b62984e923bf8d8a0013f7d7))
+* **render:** show correct key for home. Fixes [#1796](https://github.com/folke/lazy.nvim/issues/1796) ([b08dba8](https://github.com/folke/lazy.nvim/commit/b08dba8107b5bdaaa007f18cf6c0cc0e0fd576aa))
+
+## [11.15.0](https://github.com/folke/lazy.nvim/compare/v11.14.2...v11.15.0) (2024-12-05)
+
+
+### Features
+
+* **plugin:** show error for local plugins that don't exist. Fixes [#1773](https://github.com/folke/lazy.nvim/issues/1773) ([9570a5a](https://github.com/folke/lazy.nvim/commit/9570a5ae7b17dcde4718c7458fd986c10f015a99))
+
 ## [11.14.2](https://github.com/folke/lazy.nvim/compare/v11.14.1...v11.14.2) (2024-11-10)
 
 

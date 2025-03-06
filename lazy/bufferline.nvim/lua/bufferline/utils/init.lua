@@ -176,7 +176,9 @@ function M.notify(msg, level, opts)
   level = vim.log.levels[level:upper()]
   if type(msg) == "table" then msg = table.concat(msg, "\n") end
   local nopts = { title = "Bufferline" }
-  if opts.once then return vim.schedule(function() vim.notify_once(msg, level, nopts) end) end
+  if opts.once then
+    return vim.schedule(function() vim.notify_once(msg, level, nopts) end)
+  end
   vim.schedule(function() vim.notify(msg, level, nopts) end)
 end
 
@@ -215,6 +217,7 @@ function M.get_icon(opts)
     if icon then return icon, hl end
   end
 
+  if not config.options.show_buffer_icons then return "", "" end
   local loaded, webdev_icons = pcall(require, "nvim-web-devicons")
   if opts.directory then
     local hl = loaded and "DevIconDefault" or nil

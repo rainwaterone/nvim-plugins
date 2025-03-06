@@ -1,5 +1,8 @@
 # Dressing.nvim
 
+> [!WARNING]
+> This plugin is archived! It still works, but I recommend that you use [snacks.nvim](https://github.com/folke/snacks.nvim) instead for your `vim.ui.*` interfaces. To read more about why this decision was made, see https://github.com/stevearc/dressing.nvim/issues/190
+
 With the release of Neovim 0.6 we were given the start of extensible core UI
 hooks ([vim.ui.select](https://github.com/neovim/neovim/pull/15771) and
 [vim.ui.input](https://github.com/neovim/neovim/pull/15959)). They exist to
@@ -41,6 +44,10 @@ Neovim 0.8.0+ (for earlier versions, use the [nvim-0.7](https://github.com/steve
 `vim.select` (nui)
 
 ![Screenshot from 2021-12-02 19-47-56](https://user-images.githubusercontent.com/506791/144542071-1aa66f81-b07c-492e-9884-fdafed1006df.png)
+
+`vim.select` (snacks_picker)
+
+![Screenshot from 2025-01-29 03-08-00](https://github.com/user-attachments/assets/4bc72539-9c81-4428-8778-f7904a16898c)
 
 `vim.select` (built-in)
 
@@ -258,6 +265,8 @@ require("dressing").setup({
         cursorlineopt = "both",
         -- disable highlighting for the brackets around the numbers
         winhighlight = "MatchParen:",
+        -- adds padding at the left border
+        statuscolumn = " ",
       },
 
       -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
@@ -369,6 +378,8 @@ For now this is available only for the telescope backend, but feel free to reque
 
 ## Alternative and related projects
 
+- [snacks.nvim](https://github.com/folke/snacks.nvim/blob/main/docs/input.md) - has a `vim.ui.input` implementation
+- [mini.nvim](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pick.md) - has a `vim.ui.select` implementation
 - [telescope-ui-select](https://github.com/nvim-telescope/telescope-ui-select.nvim) - provides a `vim.ui.select` implementation for telescope
 - [fzf-lua](https://github.com/ibhagwan/fzf-lua/blob/061a4df40f5238782fdd7b380fe55650fadd9384/README.md?plain=1#L259-L264) - provides a `vim.ui.select` implementation for fzf
 - [nvim-fzy](https://github.com/mfussenegger/nvim-fzy) - fzf alternative that also provides a `vim.ui.select` implementation ([#13](https://github.com/mfussenegger/nvim-fzy/pull/13))

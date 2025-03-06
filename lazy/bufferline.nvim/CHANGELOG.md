@@ -1,5 +1,19 @@
 # Changelog
 
+## [4.9.1](https://github.com/akinsho/bufferline.nvim/compare/v4.9.0...v4.9.1) (2025-01-14)
+
+
+### Bug Fixes
+
+* **utils:** correctly check for showing buffer icons ([1363a05](https://github.com/akinsho/bufferline.nvim/commit/1363a05043f1bca8012b979474fd35936f264d7c))
+
+## [4.9.0](https://github.com/akinsho/bufferline.nvim/compare/v4.8.0...v4.9.0) (2024-10-24)
+
+
+### Features
+
+* **pick:** add config option for pick alphabet ([#972](https://github.com/akinsho/bufferline.nvim/issues/972)) ([5cc447c](https://github.com/akinsho/bufferline.nvim/commit/5cc447cb2b463cb499c82eaeabbed4f5fa6a0a44))
+
 ## [4.8.0](https://github.com/akinsho/bufferline.nvim/compare/v4.7.0...v4.8.0) (2024-10-22)
 
 
